@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "username": "salem alqhatani",
+      "password": "1000",
+      "email": "salem055@gmail.com"
+    },
+    {
+      "username": "ddd",
+      "password": "444",
+      "email": "ddd@gmail.com"
+    },
+    {
+      "username": "salem alqhatani",
+      "password": "1000",
+      "email": "salem055@gmail.com"
+    }
+  ],
+  "type": "simple"
+}
