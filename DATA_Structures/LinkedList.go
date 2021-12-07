@@ -11,6 +11,13 @@ type LinkedList struct{
 	length int
 }
 
+func (l *LinkedList) insert(n *Node){
+	second := l.head
+	l.head = n 
+	l.head.Next = second
+	l.length++
+}
+
 func (l LinkedList) PrintList(){
 	toPrint := l.head
 	for l.length != 0 {
@@ -22,13 +29,13 @@ func (l LinkedList) PrintList(){
 }
 
 // Dnode is to delete the node with value
-func (l *LinkedList) Dnode(value int) {
+func (l *LinkedList) Dnode(value int){
 	if l.length == 0 {
 		return
 	}
-	l.head.Data == value {
+	if l.head.Data == value {
 		l.head = l.head.Next
-		l.length--
+		l.length --
 		return
 	}
 	PrevioustoDelete := l.head
@@ -42,12 +49,7 @@ func (l *LinkedList) Dnode(value int) {
 	l.length --
 }
 
-func (l *LinkedList) insert(n *Node){
-	second := l.head
-	l.head = n 
-	l.head.Next = second
-	l.length++
-}
+
 
 func main(){
 	mylist := LinkedList{}
@@ -60,10 +62,14 @@ func main(){
 	mylist.insert(node3)
 	
 	fmt.Println(mylist)
+
 	mylist.PrintList()
+	
 	mylist = LinkedList{}
+	
 	mylist.Dnode(10)
 	
 	fmt.Println(mylist)
+	
 	mylist.PrintList()
 }
