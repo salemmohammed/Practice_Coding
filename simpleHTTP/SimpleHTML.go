@@ -1,31 +1,47 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 )
 
-var userCounter int
+type Response struct {
+	Message string `json:"message"`
+}
 
-type reportCounter struct {
-	counter int
+func GetRequest(rw http.ResponseWriter, req *http.Request) {
+	rw.Header().Add("Content-Type", "application/json")
+
+	if req.Method == "GET" {
+		data := Response{Message: "Hello World From - GET"}
+		json, _ := json.Marshal(data)
+		fmt.Fprint(rw, string(json))
+	} else {
+		data := Response{Message: "Bad Request"}
+		json, _ := json.Marshal(data)
+		fmt.Fprint(rw, string(json))
+	}
+}
+
+func PostRequest(rw http.ResponseWriter, req *http.Request) {
+	rw.Header().Add("Content-Type", "application/json")
+
+	if req.Method == "POST" {
+		data := Response{Message: "Hello World From - POST"}
+		json, _ := json.Marshal(data)
+		fmt.Fprint(rw, string(json))
+	} else {
+		data := Response{Message: "Bad Request"}
+		json, _ := json.Marshal(data)
+		fmt.Fprint(rw, string(json))
+	}
 }
 
 func main() {
-	http.HandleFunc("/users", userHandleFunc)
-	var rc reportCounter
-	http.Handle("/reports", &rc)
-	log.Fatal(http.ListenAndServe(":8080", nil))
-}
+	http.HandleFunc("/get", GetRequest)
+	http.HandleFunc("/post", PostRequest)
 
-func (rc *reportCounter) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("We got a request on /reports")
-	rc.counter++
-	s := fmt.Sprintf("/reports API call count: %v", rc.counter)
-	fmt.Fprintf(w, s)
-}
-func userHandleFunc(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Welcome to the page")
-	fmt.Fprintf(w, "hi, thanks %v", r.Method)
+	log.Fatal(http.ListenAndServe(":8000", nil))
 }
